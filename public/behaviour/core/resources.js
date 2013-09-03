@@ -3,13 +3,13 @@ define(['angularjs'], function () {
 
     var resources = angular.module('resources', []);
 
-    resources.factory('twitter', function ($resource) {
+    resources.factory('twitter', ['$resource', function ($resource) {
         return {
             fetchPopular: function (callback) {
                 callback("word");
             }
         };
-    });
+    }]);
 
     return resources;
 });

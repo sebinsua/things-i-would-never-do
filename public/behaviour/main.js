@@ -1,8 +1,8 @@
-'use strict';
+define('main', ['core/app', 'core/controllers'], function (app) {
+    'use strict';
 
-define('main', ['core/app'], function (app) {
-    var $d = app.angular.element(document);
-    $d.ready(function () {
-        app.init();
-    });
+    for (var i = 0, moduleNames = []; i < arguments.length; i++) {
+        moduleNames.push(arguments[i].name);
+    }
+    app.init(moduleNames);
 });

@@ -1,19 +1,15 @@
-define('core/app', ['angular-resource-jam', 'angularjs', 'core/controllers'], function (ngResource) {
+define('core/app', ['angularjs'], function () {
     'use strict';
 
-    var AppModule = angular.module('things-i-would-never-do', ['ngResource']);
+    var angularModule = angular.module('core/app', []),
+        app = {};
 
-    var app = {};
-    app.init = function () {
-        angular.bootstrap(document, [AppModule['name'], 'controllers']);
+    app.init = function (moduleNames) {
+        console.log(moduleNames);
+        angular.bootstrap(document, moduleNames);
     };
-
-    app.__defineGetter__(AppModule['name'], function () {
-        return AppModule;
-    });
-    app.__defineGetter__('angular', function () {
-        return angular;
-    });
+    app.__defineGetter__('name', function () { return angularModule['name']; });
+    app.__defineGetter__('core/app', function () { return angularModule; })
 
     return app;
 });
