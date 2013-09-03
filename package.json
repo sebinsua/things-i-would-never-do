@@ -2,10 +2,20 @@
   "name": "things-i-would-never-do",
   "version": "0.0.1",
   "dependencies": {
-    "express": "3.1.x"
+    "express": "3.1.x",
+    "jade": "*",
+    "stylus": "*",
+    "nib": "*"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x"
+  },
+  "jam": {
+    "packageDir": "public/behaviour/vendor",
+    "baseUrl": "public/behaviour",
+    "dependencies": {
+      "angular-resource-jam": "1.0.1"
+    }
   }
 }
