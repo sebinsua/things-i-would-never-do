@@ -13,8 +13,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "postinstall": "echo postinstall time; ./node_modules/jamjs/bin/jam.js
-    install;"
+    "postinstall": "echo postinstall time; ./node_modules/jamjs/bin/jam.js install;"
   },
   "jam": {
     "packageDir": "public/behaviour/vendor",
