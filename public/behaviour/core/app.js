@@ -5,7 +5,6 @@ define('core/app', ['angularjs'], function () {
         app = {};
 
     app.init = function (moduleNames) {
-        console.log(moduleNames);
         angular.bootstrap(document, moduleNames);
     };
     app.__defineGetter__('name', function () { return angularModule['name']; });

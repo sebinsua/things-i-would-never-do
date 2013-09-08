@@ -3,8 +3,16 @@ define('core/controllers', ['angularjs'], function () {
 
     var controllers = angular.module('core/controllers', []);
 
-    controllers.controller('Tweets', ['$scope', function ($scope) {
-        $scope.value = Math.random();
+    controllers.controller('TwitterCtrl', ['$scope', 'twitter', function ($scope, twitter) {
+        $scope.tweets = [];
+        $scope.loadingTweets = true;
+        $scope.statusMessage = "Loading tweets..."
+
+        twitter.query().success(function (tweets) { 
+            $scope.tweets = tweets;
+        }).error(function (err) {
+            $scope.statusMessage = "Error loading tweets."
+        });
     }]);
 
     return controllers;

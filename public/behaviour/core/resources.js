@@ -1,12 +1,13 @@
-define(['angularjs'], function () {
+define('core/resources', ['angularjs', 'angular-resource-jam'], function () {
     'use strict';
 
-    var resources = angular.module('resources', []);
+    var resources = angular.module('core/resources', ['ngResource']);
 
-    resources.factory('twitter', ['$resource', function ($resource) {
+    resources.factory('twitter', ['$http', function ($http) {
         return {
-            fetchPopular: function (callback) {
-                callback("word");
+            query: function (queryString) {
+                queryString = queryString || "#thingsiwouldneverdo"
+                return $http.get('/twitter/search/tweets?q=' + queryString);
             }
         };
     }]);

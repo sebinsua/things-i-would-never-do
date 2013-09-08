@@ -1,5 +1,9 @@
 extend layout
 block content
-    p
-        | some text goes here
-        | and here. {{value}}
+    .container(ng-controller="TwitterCtrl")
+        section.main-content
+                ul(ng-show="tweets")
+                    li(ng-repeat="tweet in tweets") {{tweet.text}}
+                div(ng-hide="tweets", ng-class="{error: !loadingTweets }")
+                    | {{statusMessage}}
+

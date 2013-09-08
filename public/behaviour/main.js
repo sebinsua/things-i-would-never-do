@@ -1,4 +1,4 @@
-define('main', ['core/app', 'core/controllers'], function (app) {
+define('main', ['core/app', 'core/controllers', 'core/resources'], function (app) {
     'use strict';
 
     for (var i = 0, moduleNames = []; i < arguments.length; i++) {
