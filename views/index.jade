@@ -3,7 +3,14 @@ block content
     .container(ng-controller="TwitterCtrl")
         section.main-content
                 ul(ng-show="tweets")
-                    li(ng-repeat="tweet in tweets") {{tweet.text}}
-                div(ng-hide="tweets", ng-class="{error: !loadingTweets }")
+                    li(ng-repeat="tweet in tweets")
+                        a(href="http://twitter.com/{{tweet.user.screen_name}}") {{tweet.user.name}}
+                        |  {{tweet.text}}
+                div(ng-hide="tweets", ng-class="statusClass")
                     | {{statusMessage}}
+                
+                div.tweeter
+                    a(href="https://twitter.com/intent/tweet?button_hashtag=thingsiwouldneverdo", class="twitter-hashtag-button", data-size="large", data-related="bemomentum,thingsiwouldneverdo") Tweet #thingsiwouldneverdo
+                    script.
+                        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 

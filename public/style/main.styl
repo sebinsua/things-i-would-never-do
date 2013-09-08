@@ -5,8 +5,67 @@ global-reset()
 main-color = #fa5b4d
 background-color = #faf9f0
 
+@font-face
+    font-family Paytone
+    font-style normal
+    font-weight 400
+    src local('Paytone One'), local('PaytoneOne'), url(http://themes.googleusercontent.com/static/fonts/paytoneone/v5/D_d4Nj6jwG2cmUCLYeqgKbrIa-7acMAeDBVuclsi6Gc.woff) format('woff')
+
 body
     font-family "Georgia"
     background-color background-color
     color #444
+    font-size 22px;
+
+h1
+    width 700px
+    margin 0 auto
+    font-family Paytone, sans-serif
+    font-size 90px
+    text-align center
+    line-height: 1.2em
+    margin-top 25px
+    margin-bottom 25px
+    background url(image/parachuting.jpg) no-repeat
+    background-clip text
+    color transparent
+    background-size 100%
+
+.main-content
+    width 600px
+    margin 25px auto
+    margin-top 25px
+
+    li
+        padding 5px
+
+    a
+        text-decoration none
+
+.tweeter
+    width 200px
+    margin 0 auto
+    margin-top 25px
+
+footer p
+    position absolute
+    bottom 0px
+    padding-top 25px
+    padding-bottom 25px
+    width 100%
+    text-align center
+    font-size 12px
+
+.animate-enter
+    transition 1s linear all
+    opacity 0
+
+.animate-enter.animate-enter-active
+    opacity 1
+
+.status
+    background-image url('image/ajax-loader.gif')
+    background-position left center
+    background-repeat no-repeat
+    padding-left 25px
 

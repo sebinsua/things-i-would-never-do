@@ -5,12 +5,14 @@ define('core/controllers', ['angularjs'], function () {
 
     controllers.controller('TwitterCtrl', ['$scope', 'twitter', function ($scope, twitter) {
         $scope.tweets = [];
-        $scope.loadingTweets = true;
-        $scope.statusMessage = "Loading tweets..."
 
-        twitter.query().success(function (tweets) { 
+        $scope.statusClass = "status"
+        $scope.statusMessage = "Loading tweets...";
+
+        twitter.query().success(function (tweets) {
             $scope.tweets = tweets;
         }).error(function (err) {
+            $scope.statusClass = "error";
             $scope.statusMessage = "Error loading tweets."
         });
     }]);

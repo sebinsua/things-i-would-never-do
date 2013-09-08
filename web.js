@@ -8,21 +8,22 @@ var OAuth2 = require("OAuth").OAuth2,
 
 var app = express();
 app.use(express.logger());
-app.use(express.static(__dirname + "/public"));
-app.use(stylus.middleware(
-    {
-        "src": __dirname + "/public/style",
-        "compile": function compile(str, path) {
-            return stylus(str).set("filename", path).use(nib())
-        }
-    }
-));
+
 app.engine('jade', require('jade').__express)
 app.set("view engine", "jade");
 app.set("views", __dirname + "/views");
 
+app.use(stylus.middleware(
+    {
+        "src": __dirname + "/public/style/",
+        "compile": function compile (str, path) {
+            return stylus(str).set("filename", path).use(nib())
+        }
+    }
+));
+app.use(express.static(__dirname + "/public"));
+
 app.get("/", function (req, res) {
-    // res.send("Hello World");
     res.render("index");
 });
 
