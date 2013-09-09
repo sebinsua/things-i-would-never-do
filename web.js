@@ -2,7 +2,7 @@ var express = require("express"),
     stylus = require("stylus"),
     nib = require("nib");
 
-var OAuth2 = require("OAuth").OAuth2,
+var OAuth2 = require("oauth").OAuth2,
     request = require("request"),
     querystring = require("querystring");
 
@@ -38,8 +38,8 @@ app.get('/twitter/search/tweets', function (req, res) {
         { 'grant_type': 'client_credentials' },
         function (e, accessToken) {
             console.log('Bearer ' + accessToken);
-                 
-            request.get("https://api.twitter.com/1.1/search/tweets.json?" + querystring.stringify({ q: queryString }), 
+
+            request.get("https://api.twitter.com/1.1/search/tweets.json?" + querystring.stringify({ q: queryString }),
                 { headers: { Authorization: "Bearer " + accessToken } }, function (err, resp, body) {
                 var statuses = JSON.parse(body).statuses;
                 res.json(statuses);
