@@ -1,6 +1,6 @@
 extend layout
 block content
-    .container(ng-controller="TwitterCtrl")
+    .container(ng-controller="TwitterCtrl", ng-cloak)
         section.main-content
                 ul(ng-show="tweets")
                     li(ng-repeat="tweet in tweets")
