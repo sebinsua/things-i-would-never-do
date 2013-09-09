@@ -8,14 +8,20 @@
     "jade": "*",
     "stylus": "*",
     "nib": "*",
-    "jamjs": "0.2.17"
+    "jamjs": "0.2.17",
+    "mocha": "1.12.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x"
   },
   "scripts": {
-    "postinstall": "echo postinstall time; ./node_modules/jamjs/bin/jam.js install;"
+    "postinstall": "echo postinstall time; ./node_modules/jamjs/bin/jam.js install;",
+    "test": "make test"
   },
   "jam": {
     "packageDir": "public/behaviour/vendor",
