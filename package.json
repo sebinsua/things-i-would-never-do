@@ -1,6 +1,6 @@
 {
   "name": "things-i-would-never-do",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "oauth": "0.9.10",
     "request": "2.27.0",
