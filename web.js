@@ -27,7 +27,6 @@ app.get("/", function (req, res) {
     res.render("index");
 });
 
-app.param(":templateName", /^\w+$/);
 app.get('/partial/:templateName.html', function (req, res) {
     var templateName = req.params.templateName;
     res.render("partial/" + templateName);
