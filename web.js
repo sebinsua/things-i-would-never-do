@@ -41,6 +41,9 @@ app.get('/twitter/search/tweets', function (req, res) {
 
             request.get("https://api.twitter.com/1.1/search/tweets.json?" + querystring.stringify({ q: queryString }),
                 { headers: { Authorization: "Bearer " + accessToken } }, function (err, resp, body) {
+                if (err) {
+                    res.json({});
+                }
                 var statuses = JSON.parse(body).statuses;
                 res.json(statuses);
             });
