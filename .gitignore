@@ -2,3 +2,4 @@ node_modules
 public/behaviour/vendor
 *.css
 .DS_Store
+.env

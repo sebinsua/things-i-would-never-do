@@ -30,10 +30,8 @@ app.get("/", function (req, res) {
 app.get('/twitter/search/tweets', function (req, res) {
     var queryString = req.query.q || '#thingsiwouldneverdo';
 
-    // @todo: https://devcenter.heroku.com/articles/config-vars
-    // http://stackoverflow.com/questions/4870328/how-to-read-environment-variable-in-node-js
-    var key = '490JGQJGcD15z4cfyqgGGg';
-    var secret  = 'AV1VabuE9o0puFXBWAJf89MZrVpEGgd3EDtmR4zU';
+    var key = process.env.TWITTER_KEY;
+    var secret  = process.env.TWITTER_SECRET;
     var oauth2 = new OAuth2(key, secret, 'https://api.twitter.com/', null, 'oauth2/token', null);
     oauth2.getOAuthAccessToken(
         '',
