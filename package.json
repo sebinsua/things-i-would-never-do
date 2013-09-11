@@ -20,7 +20,6 @@
     "karma": "latest",
     "karma-mocha": "latest",
     "karma-chrome-launcher": "latest",
-    "karma-ng-scenario": "latest"
   },
   "engines": {
     "node": "0.10.x",
