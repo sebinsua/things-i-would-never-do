@@ -1,5 +1,2 @@
 01. Route Provider and ng-view.
 02. ng-animate...
-03. Change the OAuth stuff so it is cached. Also cache the results... MongoDB.
-04. Change the cursor to help.
-05. Change length of list in API.

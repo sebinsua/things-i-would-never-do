@@ -40,6 +40,7 @@ app.get('/partial/:templateName.html', function (req, res) {
 
 app.get('/twitter/search/tweets', function (req, res) {
     var queryString = req.query.q || '#thingsiwouldneverdo';
+    var url = "https://api.twitter.com/1.1/search/tweets.json?" + querystring.stringify({ q: queryString, count: 10 });
 
     async.waterfall(
         [
@@ -70,7 +71,7 @@ app.get('/twitter/search/tweets', function (req, res) {
                 });
             },
             function (accessToken, callback) {
-                request.get("https://api.twitter.com/1.1/search/tweets.json?" + querystring.stringify({ q: queryString }),
+                request.get(url),
                             { headers: { Authorization: "Bearer " + accessToken } }, function (err, resp, body) {
                     if (err) {
                         callback(err);
