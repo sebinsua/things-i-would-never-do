@@ -41,7 +41,7 @@ app.get('/partial/:templateName.html', function (req, res) {
 app.get('/twitter/search/tweets', function (req, res) {
     var queryString = req.query.q || '#thingsiwouldneverdo';
 
-    async.parallel(
+    async.waterfall(
         [
             function (callback) {
                 client.get('accessToken', function (err, accessToken) {
