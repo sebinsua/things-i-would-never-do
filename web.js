@@ -2,7 +2,8 @@ var express = require("express"),
     stylus = require("stylus"),
     nib = require("nib");
 
-var redis = require("redis"),
+var async = require('async'),
+    redis = require("redis"),
     redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
 var client = redis.createClient(redisUrl.port, redisUrl.hostname, {no_ready_check: true});
 client.auth(redisUrl.auth.split(":")[1]);
