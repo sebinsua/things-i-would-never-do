@@ -3,8 +3,8 @@ var express = require("express"),
     nib = require("nib");
 
 var redis = require("redis"),
-    redisUrl = require('url').parse(process.env.REDISCLOUD_URL),
-    client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+    redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
+var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 client.auth(redisURL.auth.split(":")[1]);
 
 var OAuth2 = require("oauth").OAuth2,
