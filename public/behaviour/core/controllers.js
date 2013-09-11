@@ -22,5 +22,9 @@ define('core/controllers', ['angularjs'], function () {
         });
     }]);
 
+    controllers.controller('SignupCtrl', ['$scope', function ($scope) {
+
+    }]);
+
     return controllers;
 });

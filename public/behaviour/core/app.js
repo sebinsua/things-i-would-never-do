@@ -11,6 +11,10 @@ define('core/app', ['angularjs'], function () {
                     templateUrl: "partial/tweets.html",
                     controller: "TwitterCtrl"
                 })
+                .when('/signup', {
+                  templateUrl: "partial/signup.html",
+                  controller: "SignupCtrl"
+                })
                 .otherwise({ redirectTo: '/' });
         });
         angular.bootstrap(document, moduleNames);
