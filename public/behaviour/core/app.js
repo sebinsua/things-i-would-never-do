@@ -5,6 +5,14 @@ define('core/app', ['angularjs'], function () {
         app = {};
 
     app.init = function (moduleNames) {
+        angularModule.config(function ($routeProvider) {
+            $routeProvider
+                .when('/', {
+                    templateUrl: "partial/tweets.html",
+                    controller: "TwitterCtrl"
+                })
+                .otherwise({ redirectTo: '/' });
+        });
         angular.bootstrap(document, moduleNames);
     };
     app.__defineGetter__('name', function () { return angularModule['name']; });

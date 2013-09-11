@@ -15,6 +15,11 @@ define('core/controllers', ['angularjs'], function () {
             $scope.statusClass = "error";
             $scope.statusMessage = "Error loading tweets."
         });
+
+        $scope.$on("$viewContentLoaded", function () {
+          // Fix to allow the twitter javascript from the ng-view to run. :)
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+        });
     }]);
 
     return controllers;

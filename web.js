@@ -35,7 +35,13 @@ app.get("/", function (req, res) {
 
 app.get('/partial/:templateName.html', function (req, res) {
     var templateName = req.params.templateName;
-    res.render("partial/" + templateName);
+    res.render("partial/" + templateName, {}, function (err, html) {
+        if (err) {
+            res.send("Nothing found!", 404);
+        } else {
+            res.end(html);
+        }
+    });
 });
 
 app.get('/twitter/search/tweets', function (req, res) {
