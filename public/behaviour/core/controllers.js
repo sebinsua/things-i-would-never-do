@@ -23,7 +23,11 @@ define('core/controllers', ['angularjs'], function () {
     }]);
 
     controllers.controller('SignupCtrl', ['$scope', function ($scope) {
+        $scope.clicked = false;
 
+        $scope.testClick = function () {
+          $scope.clicked = !$scope.clicked;
+        };
     }]);
 
     return controllers;
