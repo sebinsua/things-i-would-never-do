@@ -16,6 +16,7 @@
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
+    "sinon": "*",
     "karma": "latest",
     "karma-mocha": "latest",
     "karma-chrome-launcher": "latest",
