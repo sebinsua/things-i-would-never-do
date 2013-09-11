@@ -9,7 +9,7 @@ define('core/controllers', ['angularjs'], function () {
         $scope.statusClass = "status"
         $scope.statusMessage = "Loading tweets...";
 
-        twitter.query().success(function (tweets) {
+        twitter.query("#thingsiwouldneverdo").success(function (tweets) {
             $scope.tweets = tweets;
         }).error(function (err) {
             $scope.statusClass = "error";

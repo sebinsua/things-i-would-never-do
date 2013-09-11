@@ -5,9 +5,14 @@ define('core/resources', ['angularjs', 'angular-resource-jam'], function () {
 
     resources.factory('twitter', ['$http', function ($http) {
         return {
-            query: function (queryString) {
-                queryString = queryString || "#thingsiwouldneverdo"
-                return $http.get('/twitter/search/tweets?q=' + queryString);
+            query: function (_query) {
+                var url = '/twitter/search/tweets';
+                var queryString;
+                if (_query) {
+                  queryString = '?q=' + _query;
+                }
+
+                return $http.get(url + queryString);
             }
         };
     }]);
