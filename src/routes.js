@@ -1,3 +1,6 @@
+/* jslint node: true */
+'use strict';
+
 var controllers = require('./controllers');
 
 module.exports = function () {

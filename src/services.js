@@ -1,3 +1,6 @@
+/* jslint node: true */
+'use strict';
+
 var async = require('async'),
     redis = require("redis"),
     redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
