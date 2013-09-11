@@ -4,6 +4,7 @@ var express = require("express"),
 
 var redis = require("redis"),
     redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
+console.log(redisUrl);
 var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 client.auth(redisURL.auth.split(":")[1]);
 
