@@ -71,7 +71,7 @@ app.get('/twitter/search/tweets', function (req, res) {
                 });
             },
             function (accessToken, callback) {
-                request.get(url),
+                request.get(url,
                             { headers: { Authorization: "Bearer " + accessToken } }, function (err, resp, body) {
                     if (err) {
                         callback(err);
