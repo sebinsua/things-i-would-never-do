@@ -13,7 +13,8 @@ var OAuth2 = require("oauth").OAuth2,
 
 var TwitterService = function () {
   var baseUrl = "https://api.twitter.com/1.1";
-  var cacheExpiryTime = 60; // 60 seconds...
+  var shortCacheExpiryTime = 15;
+  var longCacheExpiryTime = 60;
 
   var _checkCacheOrMakeRequest = function (key, orMakeRequest, callback) {
     client.get(key, function (err, reply) {
@@ -41,7 +42,7 @@ var TwitterService = function () {
         function (e, accessToken) {
           console.log('Bearer ' + accessToken);
           client.set("accessToken", accessToken);
-          client.expire("accessToken", cacheExpiryTime * 10);
+          client.expire("accessToken", longCacheExpiryTime * 10);
           callback(null, accessToken);
         }
       );
@@ -62,7 +63,7 @@ var TwitterService = function () {
       request.get(url, { headers: { Authorization: "Bearer " + accessToken } },
         function (err, resp, body) {
           client.set(key, body);
-          client.expire(key, cacheExpiryTime);
+          client.expire(key, shortCacheExpiryTime);
           _parseAndGoToNextCallback(err, body);
       });
     }, _parseAndGoToNextCallback);
