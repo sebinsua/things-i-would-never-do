@@ -14,12 +14,13 @@
     "mocha": "1.12.1"
   },
   "devDependencies": {
+    "jslint": "*",
     "mocha": "*",
     "chai": "*",
     "sinon": "*",
     "karma": "latest",
     "karma-mocha": "latest",
-    "karma-chrome-launcher": "latest",
+    "karma-chrome-launcher": "latest"
   },
   "engines": {
     "node": "0.10.x",
@@ -33,7 +34,10 @@
     "packageDir": "public/behaviour/vendor",
     "baseUrl": "public/behaviour",
     "dependencies": {
-      "angular-resource-jam": "1.0.1"
+      "angular-resource-jam": "1.0.1",
+      "mocha-amd": "1.12.0",
+      "chai-amd": "1.7.2",
+      "sinon": "1.5.0"
     }
   }
 }
