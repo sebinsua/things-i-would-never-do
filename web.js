@@ -5,7 +5,7 @@ var express = require("express"),
 var redis = require("redis"),
     redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
 var client = redis.createClient(redisUrl.port, redisUrl.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
+client.auth(redisUrl.auth.split(":")[1]);
 
 var OAuth2 = require("oauth").OAuth2,
     request = require("request"),
