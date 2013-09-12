@@ -52,7 +52,7 @@ describe("Controllers", function () {
             expect(controllers.twitterSearchTweets).to.be.a("function");
         });
 
-        it("should return some json", function () {
+        it("should return some json always", function () {
             var mockReq = {
                 query: {}
             };

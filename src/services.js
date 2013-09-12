@@ -14,30 +14,64 @@ var OAuth2 = require("oauth").OAuth2,
 
 
 
-var TwitterService = function () {
+var TwitterService = function (stubCacheClient) {
   var baseUrl = "https://api.twitter.com/1.1";
+  
+  var cacheClient = null;
   var shortCacheExpiryTime = 15;
   var longCacheExpiryTime = 60;
 
-  var redisUrl = url.parse(config.REDISCLOUD_URL);
-  var redisAuth = redisUrl.auth ? redisUrl.auth.split(":")[1] : '';
+  this.searchTweets = function (queryString, renderResponseCallback) {
+    var url = baseUrl + "/search/tweets.json?" + querystring.stringify({ q: queryString, count: 10 });
 
-  var client = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
-  client.on("error", function (err) {
-    console.log("ERROR: " + err);
-  });
-  client.auth(redisAuth);
+    async.waterfall([
+      _getAccessToken,
+      function (accessToken, callback) {
+        _makeRequestWithAccessToken(url, accessToken, callback);
+      }, function (data, callback) {
+        var statuses = data.statuses;
+        callback(null, statuses);
+      }
+    ], renderResponseCallback);
+  };
+
+  var _init = function (stubCacheClient) {
+    if (stubCacheClient) {
+      cacheClient = stubCacheClient.object;
+      return true;
+    }
+
+    var redisUrl = url.parse(config.REDISCLOUD_URL);
+    var redisAuth = redisUrl.auth ? redisUrl.auth.split(":")[1] : '';
+
+    cacheClient = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
+    cacheClient.on("error", function (err) {
+      console.log("ERROR: " + err);
+    });
+    cacheClient.auth(redisAuth);
+  };
+
+  this.revealPrivates = function () {
+    this._getCacheClient = _getCacheClient;
+    this._checkCacheOrMakeRequest = _checkCacheOrMakeRequest;
+    this._getAccessToken = _getAccessToken;
+    this._makeRequestWithAccessToken = _makeRequestWithAccessToken;
+  }
+
+  var _getCacheClient = function () {
+    return cacheClient;
+  }
 
   var _checkCacheOrMakeRequest = function (key, orMakeRequest, callback) {
-    client.get(key, function (err, reply) {
+    cacheClient.get(key, function (err, reply) {
       if (err) {
-        callback(err);
+        return orMakeRequest(callback);
       }
 
       if (reply) {
-        callback(null, reply);
+        return callback(null, reply);
       } else {
-        orMakeRequest(callback);
+        return orMakeRequest(callback);
       }
     });
   };
@@ -45,19 +79,19 @@ var TwitterService = function () {
   var _getAccessToken = function (callback) {
     // If we can't fetch the accessToken from Redis, then get it from Twitter's OAuth2 service.
     _checkCacheOrMakeRequest("accessToken", function (callback) {
-      var key = config.TWITTER_KEY;
-      var secret  = config.TWITTER_SECRET;
-      var oauth2 = new OAuth2(key, secret, 'https://api.twitter.com/', null, 'oauth2/token', null);
+
+      var oauth2 = new OAuth2(config.TWITTER_KEY, config.TWITTER_SECRET, 'https://api.twitter.com/', null, 'oauth2/token', null);
       oauth2.getOAuthAccessToken(
         '',
         { 'grant_type': 'client_credentials' },
         function (e, accessToken) {
           console.log('Bearer ' + accessToken);
-          client.set("accessToken", accessToken);
-          client.expire("accessToken", longCacheExpiryTime * 10);
+          cacheClient.set("accessToken", accessToken);
+          cacheClient.expire("accessToken", longCacheExpiryTime * 10);
           callback(null, accessToken);
         }
       );
+
     }, callback);
   };
 
@@ -74,27 +108,14 @@ var TwitterService = function () {
     _checkCacheOrMakeRequest(key, function () {
       request.get(url, { headers: { Authorization: "Bearer " + accessToken } },
         function (err, resp, body) {
-          client.set(key, body);
-          client.expire(key, shortCacheExpiryTime);
+          cacheClient.set(key, body);
+          cacheClient.expire(key, shortCacheExpiryTime);
           _parseAndGoToNextCallback(err, body);
       });
     }, _parseAndGoToNextCallback);
   };
 
-  this.searchTweets = function (queryString, renderResponseCallback) {
-    var url = baseUrl + "/search/tweets.json?" + querystring.stringify({ q: queryString, count: 10 });
-
-    async.waterfall([
-      _getAccessToken,
-      function (accessToken, callback) {
-        _makeRequestWithAccessToken(url, accessToken, callback);
-      }, function (data, callback) {
-        var statuses = data.statuses;
-        callback(null, statuses);
-      }
-    ], renderResponseCallback);
-  };
-
+  _init(stubCacheClient);
 };
 
 module.exports = {
