@@ -27,7 +27,7 @@ var TwitterService = function (mockCacheClient, mockOauth2, mockRequest) {
   this.searchTweets = function (queryString, renderResponseCallback) {
     async.waterfall([
       _getAccessToken,
-      _generateMakeRequestWithAccessTokenFunctionFromParameters({ q: queryString, count: 10 }),
+      _generateMakeRequestWithAccessTokenFunctionFromParameters({ q: queryString, count: 8 }),
       function parseStatuses (data, callback) {
         var statuses = data.statuses;
         callback(null, statuses);
