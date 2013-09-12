@@ -8,36 +8,44 @@ var async = require('async'),
     url = require('url');
 
 var OAuth2 = require("oauth").OAuth2,
-    request = require("request"),
+    requestLib = require("request"),
     querystring = require("querystring");
 
 
 
 
-var TwitterService = function (stubCacheClient) {
+var TwitterService = function (mockCacheClient, mockOauth2, mockRequest) {
   var baseUrl = "https://api.twitter.com/1.1";
   
   var cacheClient = null;
+  var oauth2 = null;
+  var request = null;
+
   var shortCacheExpiryTime = 15;
   var longCacheExpiryTime = 60;
 
   this.searchTweets = function (queryString, renderResponseCallback) {
-    var url = baseUrl + "/search/tweets.json?" + querystring.stringify({ q: queryString, count: 10 });
-
     async.waterfall([
       _getAccessToken,
-      function (accessToken, callback) {
-        _makeRequestWithAccessToken(url, accessToken, callback);
-      }, function (data, callback) {
+      _generateMakeRequestWithAccessTokenFunctionFromParameters({ q: queryString, count: 10 }),
+      function parseStatuses (data, callback) {
         var statuses = data.statuses;
         callback(null, statuses);
       }
     ], renderResponseCallback);
   };
 
-  var _init = function (stubCacheClient) {
-    if (stubCacheClient) {
-      cacheClient = stubCacheClient.object;
+  var _init = function (mockCacheClient, mockOauth2, mockRequest) {
+    if (mockCacheClient || mockOauth2 || mockRequest) {
+      if (mockCacheClient) {
+        cacheClient = mockCacheClient.object;
+      }
+      if (mockOauth2) {
+        oauth2 = mockOauth2.object;
+      }
+      if (mockRequest) {
+        request = mockRequest.object;
+      }
       return true;
     }
 
@@ -49,17 +57,18 @@ var TwitterService = function (stubCacheClient) {
       console.log("ERROR: " + err);
     });
     cacheClient.auth(redisAuth);
+
+    oauth2 = new OAuth2(config.TWITTER_KEY, config.TWITTER_SECRET, 'https://api.twitter.com/', null, 'oauth2/token', null);
+
+    request = requestLib;
   };
 
   this.revealPrivates = function () {
-    this._getCacheClient = _getCacheClient;
     this._checkCacheOrMakeRequest = _checkCacheOrMakeRequest;
     this._getAccessToken = _getAccessToken;
+    this._generateUrlFromParameters = _generateUrlFromParameters;
+    this._generateMakeRequestWithAccessTokenFunctionFromParameters = _generateMakeRequestWithAccessTokenFunctionFromParameters;
     this._makeRequestWithAccessToken = _makeRequestWithAccessToken;
-  }
-
-  var _getCacheClient = function () {
-    return cacheClient;
   }
 
   var _checkCacheOrMakeRequest = function (key, orMakeRequest, callback) {
@@ -79,43 +88,63 @@ var TwitterService = function (stubCacheClient) {
   var _getAccessToken = function (callback) {
     // If we can't fetch the accessToken from Redis, then get it from Twitter's OAuth2 service.
     _checkCacheOrMakeRequest("accessToken", function (callback) {
-
-      var oauth2 = new OAuth2(config.TWITTER_KEY, config.TWITTER_SECRET, 'https://api.twitter.com/', null, 'oauth2/token', null);
       oauth2.getOAuthAccessToken(
         '',
         { 'grant_type': 'client_credentials' },
-        function (e, accessToken) {
-          console.log('Bearer ' + accessToken);
+        function (err, accessToken) {
+          if (err) {
+            return callback(err);
+          }
+
           cacheClient.set("accessToken", accessToken);
           cacheClient.expire("accessToken", longCacheExpiryTime * 10);
-          callback(null, accessToken);
+
+          return callback(null, accessToken);
         }
       );
 
     }, callback);
   };
 
+  var _generateUrlFromParameters = function (parameters) {
+    var url = baseUrl + "/search/tweets.json?" + querystring.stringify(parameters);
+    return url;
+  };
+
+  var _generateMakeRequestWithAccessTokenFunctionFromParameters = function (parameters) {
+    var url = _generateUrlFromParameters(parameters);
+    
+    return function (accessToken, callback) {
+      _makeRequestWithAccessToken(url, accessToken, callback);
+    };
+  }
+
   var _makeRequestWithAccessToken = function (url, accessToken, callback) {
     var _parseAndGoToNextCallback = function (err, reply) {
       if (err) {
-        callback(err);
+        return callback(err);
       }
       var data = JSON.parse(reply);
-      callback(null, data);
+      return callback(null, data);
     };
 
     var key = "tweetsForUrl-" + url;
     _checkCacheOrMakeRequest(key, function () {
       request.get(url, { headers: { Authorization: "Bearer " + accessToken } },
         function (err, resp, body) {
+          if (err) {
+            return _parseAndGoToNextCallback(err);
+          }
+
           cacheClient.set(key, body);
           cacheClient.expire(key, shortCacheExpiryTime);
-          _parseAndGoToNextCallback(err, body);
+
+          return _parseAndGoToNextCallback(err, body);
       });
     }, _parseAndGoToNextCallback);
   };
 
-  _init(stubCacheClient);
+  _init(mockCacheClient, mockOauth2, mockRequest);
 };
 
 module.exports = {
