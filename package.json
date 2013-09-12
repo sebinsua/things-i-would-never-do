@@ -18,6 +18,7 @@
     "supertest": "*",
     "mocha": "*",
     "chai": "*",
+    "chai-things": "*",
     "sinon": "*",
     "karma": "latest",
     "karma-mocha": "latest",
