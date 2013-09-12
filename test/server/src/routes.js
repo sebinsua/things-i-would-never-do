@@ -1,3 +1,6 @@
+/* jslint node: true */
+'use strict';
+
 var settings = require("../../../src/settings"),
     routes = require("../../../src/routes");
 

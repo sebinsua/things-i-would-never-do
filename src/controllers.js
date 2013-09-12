@@ -2,6 +2,7 @@
 'use strict';
 
 var services = require('./services');
+var twitter = new services.TwitterService();
 
 module.exports = {
     'index': function (req, res) {
@@ -21,8 +22,6 @@ module.exports = {
     },
    'twitterSearchTweets': function (req, res) {
       var queryString = req.query.q || '#thingsiwouldneverdo';
-
-      var twitter = new services.TwitterService();
       twitter.searchTweets(queryString, function (err, statuses) {
         if (err) {
           res.json(err);

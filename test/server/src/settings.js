@@ -2,7 +2,6 @@
 'use strict';
 
 var chai = require("chai");
-chai.use(require("chai-things"));
 var expect = chai.expect;
 
 var settings = require("../../../src/settings");

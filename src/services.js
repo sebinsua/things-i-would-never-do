@@ -11,15 +11,6 @@ var OAuth2 = require("oauth").OAuth2,
     request = require("request"),
     querystring = require("querystring");
 
-var redisUrl = url.parse(config.REDISCLOUD_URL);
-var redisAuth = redisUrl.auth ? redisUrl.auth.split(":")[1] : '';
-
-var client = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
-client.on("error", function (err) {
-  console.log("ERROR: " + err);
-});
-client.auth(redisAuth);
-
 
 
 
@@ -27,6 +18,15 @@ var TwitterService = function () {
   var baseUrl = "https://api.twitter.com/1.1";
   var shortCacheExpiryTime = 15;
   var longCacheExpiryTime = 60;
+
+  var redisUrl = url.parse(config.REDISCLOUD_URL);
+  var redisAuth = redisUrl.auth ? redisUrl.auth.split(":")[1] : '';
+
+  var client = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
+  client.on("error", function (err) {
+    console.log("ERROR: " + err);
+  });
+  client.auth(redisAuth);
 
   var _checkCacheOrMakeRequest = function (key, orMakeRequest, callback) {
     client.get(key, function (err, reply) {
