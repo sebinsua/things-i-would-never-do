@@ -11,8 +11,10 @@ module.exports = {
         var templateName = req.params.templateName;
         res.render("partial/" + templateName, {}, function (err, html) {
             if (err) {
-                res.send("Nothing found!", 404);
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end("Nothing found here!");
             } else {
+                res.writeHead(200, {'Content-Type': 'text/html'});
                 res.end(html);
             }
         });

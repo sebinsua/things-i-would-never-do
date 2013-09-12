@@ -1,15 +1,24 @@
 /* jslint node: true */
 'use strict';
 
+var config = require('./config');
+
 var async = require('async'),
     redis = require("redis"),
-    redisUrl = require('url').parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
-client.auth(redisUrl.auth.split(":")[1]);
+    url = require('url');
 
 var OAuth2 = require("oauth").OAuth2,
     request = require("request"),
     querystring = require("querystring");
+
+var redisUrl = url.parse(config.REDISCLOUD_URL);
+var redisAuth = redisUrl.auth ? redisUrl.auth.split(":")[1] : '';
+
+var client = redis.createClient(redisUrl.port, redisUrl.hostname, { no_ready_check: true });
+client.on("error", function (err) {
+  console.log("ERROR: " + err);
+});
+client.auth(redisAuth);
 
 
 
@@ -36,8 +45,8 @@ var TwitterService = function () {
   var _getAccessToken = function (callback) {
     // If we can't fetch the accessToken from Redis, then get it from Twitter's OAuth2 service.
     _checkCacheOrMakeRequest("accessToken", function (callback) {
-      var key = process.env.TWITTER_KEY;
-      var secret  = process.env.TWITTER_SECRET;
+      var key = config.TWITTER_KEY;
+      var secret  = config.TWITTER_SECRET;
       var oauth2 = new OAuth2(key, secret, 'https://api.twitter.com/', null, 'oauth2/token', null);
       oauth2.getOAuthAccessToken(
         '',

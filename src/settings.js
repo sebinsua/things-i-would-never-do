@@ -7,6 +7,7 @@ var express = require("express"),
     nib = require("nib");
 
 var baseDir = __dirname + "/..";
+global.baseDir = baseDir;
 
 module.exports = function () {
     this.use(express.logger());
@@ -17,7 +18,7 @@ module.exports = function () {
 
     this.use(stylus.middleware(
         {
-            "src":  baseDir + "/public/style/",
+            "src": baseDir + "/public/style/",
             "compile": function compile (str, path) {
                 return stylus(str).set("filename", path).use(nib())
             }

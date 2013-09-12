@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "jslint": "*",
+    "supertest": "*",
     "mocha": "*",
     "chai": "*",
     "sinon": "*",
