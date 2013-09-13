@@ -26,8 +26,7 @@
     "sinon": "*",
     "karma": "latest",
     "karma-mocha": "latest",
-    "karma-chai": "latest",
-    "karma-chrome-launcher": "latest"
+    "karma-chai": "latest"
   },
   "engines": {
     "node": "0.10.x",

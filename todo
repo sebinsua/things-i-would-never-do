@@ -1,3 +1,0 @@
-01. Add some tests.
-Be careful that chai, sinon and mocha can be used on both client and server.
-How do I know if method is called? And can I stub a method?
