@@ -1,6 +1,10 @@
 {
   "name": "things-i-would-never-do",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sebinsua/things-i-would-never-do.git"
+  },
   "dependencies": {
     "redis": "0.8.4",
     "async": "0.2.9",
@@ -22,6 +26,7 @@
     "sinon": "*",
     "karma": "latest",
     "karma-mocha": "latest",
+    "karma-chai": "latest",
     "karma-chrome-launcher": "latest"
   },
   "engines": {
@@ -29,7 +34,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "postinstall": "echo postinstall time; ./node_modules/jamjs/bin/jam.js install;",
+    "postinstall": "echo 'running postinstall...'; ./node_modules/jamjs/bin/jam.js install;",
     "test": "make test"
   },
   "jam": {
@@ -37,8 +42,6 @@
     "baseUrl": "public/behaviour",
     "dependencies": {
       "angular-resource-jam": "1.0.1",
-      "mocha-amd": "1.12.0",
-      "chai-amd": "1.7.2",
       "sinon": "1.5.0"
     }
   }

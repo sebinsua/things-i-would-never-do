@@ -9,14 +9,14 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha', 'requirejs', 'chai', 'sinon'],
+    frameworks: ['requirejs', 'mocha', 'chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'test-main.js',
-      {pattern: 'public/behaviour/**/*.js', included: false},
-      {pattern: 'test/client/**/*.js', included: false}
+      { pattern: 'public/behaviour/core/*.js', included: false },
+      { pattern: 'test/client/core/*.js', included: false },
+      'test/client/test-main.js'
     ],
 
 
@@ -65,6 +65,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true
+    singleRun: false
   });
 };
