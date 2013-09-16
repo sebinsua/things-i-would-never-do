@@ -12,16 +12,16 @@ requirejs.config({
     baseUrl: '/base',
 
     paths: {
-      'angularjs': 'test/client/lib/angular/angular-1.1.5'
-        // 'angularjs': 'public/behaviour/vendor/angularjs',
-        // 'angular-resource-jam': 'public/behaviour/vendor/angular-resource-jam',
-        // 'sinon': 'public/behaviour/vendor/sinon',
+      // 'angularjs': 'test/client/lib/angular/angular-1.1.5'
+      // 'angularjs': 'public/behaviour/vendor/angularjs',
+      // 'angular-resource-jam': 'public/behaviour/vendor/angular-resource-jam',
+      // 'sinon': 'public/behaviour/vendor/sinon',
     },
 
     shim: {
-        'angularjs': {
-            exports: 'angular'
-        }
+        // 'angularjs': {
+        //     exports: 'angular'
+        // }
     },
 
     // priority: {

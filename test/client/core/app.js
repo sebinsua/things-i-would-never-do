@@ -13,16 +13,18 @@ define([], function () {
 
   });
 
+  /*
   describe("Unit: Testing Controllers", function () {
 
     beforeEach(function () {
       angular.mock.module("core/app");
     });
 
-    it("should have a controller", function () {
+    // it("should have a controller", function () {
       // expect(App.TwitterCtrl).not.to.equal(null);
-    });
+    // });
 
   });
+  */
 
 });
