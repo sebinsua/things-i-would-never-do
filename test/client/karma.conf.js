@@ -1,7 +1,5 @@
-// Karma configuration
-// Generated on Wed Sep 11 2013 22:06:42 GMT+0100 (BST)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
@@ -16,6 +14,7 @@ module.exports = function(config) {
     files: [
       { pattern: 'public/behaviour/core/*.js', included: false },
       { pattern: 'test/client/core/*.js', included: false },
+      'test/client/lib/**/*.js',
       'test/client/test-main.js'
     ],
 
