@@ -14,7 +14,9 @@ module.exports = function (config) {
     files: [
       { pattern: 'public/behaviour/core/*.js', included: false },
       { pattern: 'test/client/core/*.js', included: false },
-      'test/client/lib/**/*.js',
+      { pattern: 'test/client/lib/angular/angular-1.1.5.js', included: true },
+      { pattern: 'test/client/lib/angular/angular-mocks-1.1.5.js', included: false },
+      // { pattern: 'test/client/lib/angular/angular-scenario-1.1.5.js', included: false },
       'test/client/test-main.js'
     ],
 
