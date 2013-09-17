@@ -1,7 +1,10 @@
 var tests = [];
 for (var file in window.__karma__.files) {
     if (window.__karma__.files.hasOwnProperty(file)) {
-        if (/\.js$/.test(file)) {
+        if (/\.js$/.test(file)
+            && !/test-main.js/.test(file)
+            && !/node_modules/.test(file)
+            && !/test\/client\/lib/.test(file)) {
             tests.push(file);
         }
     }
@@ -12,16 +15,17 @@ requirejs.config({
     baseUrl: '/base',
 
     paths: {
-      // 'angularjs': 'test/client/lib/angular/angular-1.1.5'
-      // 'angularjs': 'public/behaviour/vendor/angularjs',
-      // 'angular-resource-jam': 'public/behaviour/vendor/angular-resource-jam',
+      'angularjs': 'test/client/lib/angular/angular-1.1.5',
+      'angular-resource-jam': 'public/behaviour/vendor/angular-resource-jam/resource-jam',
+
       // 'sinon': 'public/behaviour/vendor/sinon',
+
     },
 
     shim: {
-        // 'angularjs': {
-        //     exports: 'angular'
-        // }
+      'angularjs': {
+        exports: 'angular'
+      }
     },
 
     // priority: {

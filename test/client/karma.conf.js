@@ -12,11 +12,13 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+      { pattern: 'test/client/lib/angular/angular-1.1.5.js', included: true },
+      { pattern: 'test/client/lib/angular/angular-mocks-1.1.5.js', included: true },
+      // { pattern: 'test/client/lib/angular/angular-scenario-1.1.5.js', included: false },
+      { pattern: 'public/behaviour/vendor/angular-resource-jam/resource-jam.js', included: true},
+
       { pattern: 'public/behaviour/core/*.js', included: false },
       { pattern: 'test/client/core/*.js', included: false },
-      // { pattern: 'test/client/lib/angular/angular-1.1.5.js', included: true },
-      // { pattern: 'test/client/lib/angular/angular-mocks-1.1.5.js', included: false },
-      // { pattern: 'test/client/lib/angular/angular-scenario-1.1.5.js', included: false },
       'test/client/test-main.js'
     ],
 
@@ -42,7 +44,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
