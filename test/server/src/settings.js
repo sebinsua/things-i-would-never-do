@@ -2,6 +2,8 @@
 'use strict';
 
 var chai = require("chai");
+chai.should();
+chai.use(require("chai-things"));
 var expect = chai.expect;
 
 var settings = require("../../../src/settings");
@@ -23,12 +25,7 @@ describe("Settings", function () {
 
     describe('logger middleware', function () {
         it('should have been setup', function () {
-            // @todo: Opportunity arises here to create a chai middleware. Another day though.
-            var middlewares = [];
-            for (var i = 0; i < app.stack.length; i++) {
-                middlewares.push(app.stack[i].handle.name);
-            }
-            expect(middlewares).to.include('logger');
+            expect(app.stack).to.include.something.with.deep.property("handle.name", "logger");
         });
     });
 
@@ -51,21 +48,13 @@ describe("Settings", function () {
 
     describe('stylus middleware', function () {
         it('should have been setup', function () {
-            var middlewares = [];
-            for (var i = 0; i < app.stack.length; i++) {
-                middlewares.push(app.stack[i].handle.name);
-            }
-            expect(middlewares).to.include('stylus');
+          expect(app.stack).to.include.something.with.deep.property("handle.name", "stylus");
         });
     });
 
     describe('static middleware', function () {
         it('should have been setup', function () {
-            var middlewares = [];
-            for (var i = 0; i < app.stack.length; i++) {
-                middlewares.push(app.stack[i].handle.name);
-            }
-            expect(middlewares).to.include('static');
+          expect(app.stack).to.include.something.with.deep.property("handle.name", "static");
         });
     });
 
